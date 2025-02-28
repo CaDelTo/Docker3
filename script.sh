@@ -11,7 +11,7 @@ fi
 extension="${archivo##*.}"
 # Detectar el lenguaje
 case "$extension" in
-    py) imagen="python" cmd="python" ;;
+    py) imagen="python" cmd="pip install numpy && python" ;;
     java) imagen="openjdk" cmd="javac && java" ;;
     cpp|cc) imagen="gcc" cmd="g++ -o output && ./output" ;;
     js) imagen="node" cmd="node" ;;
