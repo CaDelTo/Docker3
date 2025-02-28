@@ -1,12 +1,4 @@
 #!/bin/bash
-
-# Verificar si el script ya tiene permisos y asignarlos si es necesario
-if [[ ! -x "$0" ]]; then
-    chmod +x "$0"
-    echo "✅ Permisos asignados a $0. Ahora puedes ejecutarlo con ./script.sh"
-    exit 0
-fi
-
 # Solicitar al usuario el archivo o ruta completa
 read -p "Ingrese la ruta o nombre del archivo: " archivo
 
