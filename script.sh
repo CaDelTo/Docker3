@@ -1,17 +1,15 @@
 #!/bin/bash
-# Solicitar al usuario el archivo o ruta completa
-read -p "Ingrese la ruta o nombre del archivo: " archivo
 
+read -p "Ingrese la ruta o nombre del archivo: " archivo
 # Verificar si el archivo existe
 if [[ ! -f "$archivo" ]]; then
-    echo "❌ Error: El archivo no existe."
+    echo "Error: El archivo no existe."
     exit 1
 fi
 
-# Obtener la extensión del archivo
+# Obtener la extension del archivo
 extension="${archivo##*.}"
-
-# Detectar el lenguaje según la extensión
+# Detectar el lenguaje
 case "$extension" in
     py) imagen="python" cmd="python" ;;
     java) imagen="openjdk" cmd="javac && java" ;;
@@ -24,15 +22,14 @@ case "$extension" in
         ;;
 esac
 
-echo "✅ Lenguaje detectado: $imagen"
+echo "Lenguaje detectado: $imagen"
 
 # Medir tiempo de ejecución
-echo "🚀 Ejecutando en contenedor Docker..."
-start_time=$(date +%s%N)  # Tiempo en nanosegundos
-
+echo "Ejecutando"
+start_time=$(date +%s%N)
 docker run --rm -v "$(pwd):/app" -w /app "$imagen" sh -c "$cmd $archivo"
 
 end_time=$(date +%s%N)
-elapsed_time=$(( (end_time - start_time) / 1000000 ))  # Convertir a milisegundos
+elapsed_time=$(( (end_time - start_time) / 1000000 ))
 
-echo "⏱️ Tiempo de ejecución: $elapsed_time ms"
+echo "Tiempo de ejecución: $elapsed_time ms"
