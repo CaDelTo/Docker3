@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class test {
+public class sample {
     public static void main(String[] args) {
         int size = 100;
         int[][] A = new int[size][size];
