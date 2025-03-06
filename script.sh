@@ -17,7 +17,7 @@ case "$extension" in
     js) imagen="node" cmd="node" ;;
     rb) imagen="ruby" cmd="ruby" ;;
     *)
-        echo "❌ Error: Extensión no soportada."
+        echo "Error: Extensión no soportada."
         exit 1
         ;;
 esac

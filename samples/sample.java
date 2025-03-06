@@ -1,35 +1,25 @@
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class sample {
     public static void main(String[] args) {
-        int size = 100;
-        int[][] A = new int[size][size];
-        int[][] B = new int[size][size];
-        int[][] C = new int[size][size];
-        Random rand = new Random();
+        int n = 10_000_000;
+        long inicio = System.nanoTime();
+        double piAprox = calcularPi(n);
+        long fin = System.nanoTime();
 
-        // Llenar matrices con valores aleatorios
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                A[i][j] = rand.nextInt(10);
-                B[i][j] = rand.nextInt(10);
+        System.out.printf("Valor estimado de π: %.5f%n", piAprox);
+        System.out.printf("Tiempo de ejecución: %.5f segundos%n", (fin - inicio) / 1e9);
+    }
+
+    public static double calcularPi(int nPuntos) {
+        int dentro = 0;
+        for (int i = 0; i < nPuntos; i++) {
+            double x = ThreadLocalRandom.current().nextDouble();
+            double y = ThreadLocalRandom.current().nextDouble();
+            if (x * x + y * y <= 1) {
+                dentro++;
             }
         }
-
-        // Multiplicación de matrices
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                for (int k = 0; k < size; k++) {
-                    C[i][j] += A[i][k] * B[k][j];
-                }
-            }
-        }
-
-        // Imprimir parte del resultado
-        System.out.print("✅ Producto de matrices (primeros 5 elementos de la primera fila): ");
-        for (int i = 0; i < 5; i++) {
-            System.out.print(C[0][i] + " ");
-        }
-        System.out.println();
+        return 4.0 * dentro / nPuntos;
     }
 }
