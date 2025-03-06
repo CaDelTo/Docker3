@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Definir las imágenes necesarias
-imagenes=("python" "openjdk" "gcc" "node" "ruby")
+imagenes=("python:alpine" "openjdk:alpine" "gcc:alpine" "node:alpine" "ruby:alpine")  #TODO: Cambiar a alpine todas las versiones
 
 echo "Verificando e instalando imágenes de Docker..."
 
@@ -28,20 +28,18 @@ extension="${archivo##*.}"
 
 # Detectar el lenguaje y configurar el contenedor
 case "$extension" in
-    py) imagen="python" cmd="pip install numpy && python" ;;
-    java) imagen="openjdk" cmd="javac && java" ;;
-    cpp|cc) imagen="gcc" cmd="g++ -o output && ./output" ;;
-    js) imagen="node" cmd="node" ;;
-    rb) imagen="ruby" cmd="ruby" ;;
+    py) imagen="python:alpine" cmd="pip install numpy && python" ;;
+    java) imagen="openjdk:alpine" cmd="javac && java" ;;
+    cpp|cc) imagen="gcc:alpine" cmd="g++ -o output && ./output" ;;
+    js) imagen="node:alpine" cmd="node" ;;
+    rb) imagen="ruby:alpine" cmd="ruby" ;;
     *)
-        echo "❌ Error: Extensión no soportada."
+        echo "Error: Extensión no soportada."
         exit 1
         ;;
 esac
 
-echo "Lenguaje detectado: $imagen"
-
-# Medir tiempo de ejecución
+# Empieza a contar el tiempo de ejecución
 echo "Ejecutando"
 start_time=$(date +%s%N)
 
@@ -49,5 +47,6 @@ docker run --rm -v "$(pwd):/app" -w /app "$imagen" sh -c "$cmd $archivo"
 
 end_time=$(date +%s%N)
 elapsed_time=$(( (end_time - start_time) / 1000000 ))
+# Muestra el tiempo de ejecucion
 
 echo "Tiempo de ejecución: $elapsed_time ms"
