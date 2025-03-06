@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Definir las imágenes necesarias
-imagenes=("python:alpine" "openjdk:alpine" "gcc:alpine" "node:alpine" "ruby:alpine")  #TODO: Cambiar a alpine todas las versiones
+imagenes=("python:alpine" "openjdk:alpine" "gcc:alpine" "node:alpine" "ruby:alpine")
 
 echo "Verificando e instalando imágenes de Docker..."
 
 # Verificar e instalar imágenes si no existen
 for imagen in "${imagenes[@]}"; do
-    if [[ "$(docker images -q $imagen 2>/dev/null)" == "" ]]; then
+    if [[ -z $(docker images -q $imagen 2>/dev/null) ]]; then
         echo "Descargando imagen: $imagen"
         docker pull $imagen
     else
@@ -29,8 +29,8 @@ extension="${archivo##*.}"
 # Detectar el lenguaje y configurar el contenedor
 case "$extension" in
     py) imagen="python:alpine" cmd="pip install numpy && python" ;;
-    java) imagen="openjdk:alpine" cmd="javac && java" ;;
-    cpp|cc) imagen="gcc:alpine" cmd="g++ -o output && ./output" ;;
+    java) imagen="openjdk:alpine" cmd="javac \$(basename $archivo) && java \$(basename $archivo .java)" ;;
+    cpp|cc) imagen="gcc:alpine" cmd="g++ -o output \$(basename $archivo) && ./output" ;;
     js) imagen="node:alpine" cmd="node" ;;
     rb) imagen="ruby:alpine" cmd="ruby" ;;
     *)
@@ -39,14 +39,16 @@ case "$extension" in
         ;;
 esac
 
+# Imprimir el comando para depuración
+echo "Ejecutando: docker run --rm -v $(pwd):/app -w /app $imagen sh -c '$cmd $archivo'"
+
 # Empieza a contar el tiempo de ejecución
-echo "Ejecutando"
 start_time=$(date +%s%N)
 
-docker run --rm -v "$(pwd):/app" -w /app "$imagen" sh -c "$cmd $archivo"
+docker run --rm -v "$(pwd):/app" -w /app "$imagen" sh -c "$cmd $archivo || exit 1"
 
 end_time=$(date +%s%N)
 elapsed_time=$(( (end_time - start_time) / 1000000 ))
-# Muestra el tiempo de ejecucion
 
+# Muestra el tiempo de ejecución
 echo "Tiempo de ejecución: $elapsed_time ms"
