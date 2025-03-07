@@ -39,12 +39,12 @@
 ### **Ejemplo 1: Ejecutar un archivo de Python**
    ```bash
    bash script.sh
-   Ingrese la ruta o nombre del archivo: sample.py
+   Ingrese la ruta o nombre del archivo: samples/sample.py
    ```
 ### **Ejemplo 2: Ejecutar un archivo de C++**
    ```bash
    bash script.sh
-   Ingrese la ruta o nombre del archivo: sample.cpp
+   Ingrese la ruta o nombre del archivo: samples/sample.cpp
    ```
 
    Salida esperada en ambos casos: 
