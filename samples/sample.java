@@ -8,7 +8,7 @@ public class sample {
         long fin = System.nanoTime();
 
         System.out.printf("Valor estimado de π: %.5f%n", piAprox);
-        System.out.printf("Tiempo de ejecución: %.5f segundos%n", (fin - inicio) / 1e9);
+        System.out.printf("Tiempo de ejecución: %.2f ms%n", (fin - inicio) / 1e6);
     }
 
     public static double calcularPi(int nPuntos) {

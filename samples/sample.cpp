@@ -1,38 +1,35 @@
 #include <iostream>
-#include <vector>
 #include <cstdlib>
+#include <ctime>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 int main() {
-    int size = 100;
-    vector<vector<int>> A(size, vector<int>(size));
-    vector<vector<int>> B(size, vector<int>(size));
-    vector<vector<int>> C(size, vector<int>(size, 0));
+    const int num_iter = 1000000;
+    int inside_circle = 0;
 
-    // Llenar matrices con valores aleatorios
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            A[i][j] = rand() % 10;
-            B[i][j] = rand() % 10;
+    srand(time(0));
+    
+    // Inicio de medición de tiempo
+    auto start = high_resolution_clock::now();
+
+    for (int i = 0; i < num_iter; i++) {
+        double x = (double)rand() / RAND_MAX;
+        double y = (double)rand() / RAND_MAX;
+        if (x * x + y * y <= 1) {
+            inside_circle++;
         }
     }
 
-    // Multiplicación de matrices
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            for (int k = 0; k < size; k++) {
-                C[i][j] += A[i][k] * B[k][j];
-            }
-        }
-    }
+    // Fin de medición de tiempo
+    auto end = high_resolution_clock::now();
+    auto duration = duration_cast<milliseconds>(end - start);
 
-    // Imprimir parte del resultado
-    cout << "✅ Producto de matrices (primeros 5 elementos de la primera fila): ";
-    for (int i = 0; i < 5; i++) {
-        cout << C[0][i] << " ";
-    }
-    cout << endl;
+    double pi = 4.0 * inside_circle / num_iter;
+    cout << "Estimación de Pi: " << pi << endl;
+    cout << "Tiempo de ejecución: " << duration.count() << " ms" << endl;
 
     return 0;
 }

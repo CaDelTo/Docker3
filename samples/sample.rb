@@ -1,18 +1,17 @@
-size = 100
+start_time = Time.now
 
-# Generar matrices aleatorias
-A = Array.new(size) { Array.new(size) { rand(10) } }
-B = Array.new(size) { Array.new(size) { rand(10) } }
-C = Array.new(size) { Array.new(size, 0) }
+num_iter = 1_000_000
+inside_circle = 0
 
-# Multiplicación de matrices
-size.times do |i|
-  size.times do |j|
-    size.times do |k|
-      C[i][j] += A[i][k] * B[k][j]
-    end
-  end
+num_iter.times do
+  x = rand
+  y = rand
+  inside_circle += 1 if x**2 + y**2 <= 1
 end
 
-# Imprimir parte del resultado
-print "✅ Producto de matrices (primeros 5 elementos de la primera fila): ", C[0][0..4], "\n"
+end_time = Time.now
+execution_time_ms = (end_time - start_time) * 1000
+
+pi = 4.0 * inside_circle / num_iter
+puts "Estimación de Pi: #{pi}"
+puts "Tiempo de ejecución: #{execution_time_ms.round(2)} ms"

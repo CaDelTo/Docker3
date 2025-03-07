@@ -16,4 +16,4 @@ pi_aprox = calcular_pi(n)
 fin = time.time()
 
 print(f"Valor estimado de π: {pi_aprox}")
-print(f"Tiempo de ejecución: {fin - inicio:.5f} segundos")
+print(f"Tiempo de ejecución: {(fin - inicio) * 1000:.2f} ms")
