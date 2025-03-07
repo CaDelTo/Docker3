@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Definir las imágenes necesarias
-imagenes=("python:alpine" "openjdk:alpine" "gcc:alpine" "node:alpine" "ruby:alpine")
+imagenes=("python:alpine" "openjdk:alpine" "gcc" "node:alpine" "ruby:alpine")
 
 echo "Verificando e instalando imágenes de Docker..."
 
@@ -30,7 +30,7 @@ extension="${archivo##*.}"
 case "$extension" in
     py) imagen="python:alpine" cmd="python" ;;
     java) imagen="openjdk:alpine" cmd="javac $archivo && java ${archivo%.*}" ;;
-    cpp|cc) imagen="gcc:alpine" cmd="g++ -o ${archivo%.*} $archivo && ./${archivo%.*}" ;;
+    cpp|cc) imagen="gcc" cmd="g++ -o ${archivo%.*} $archivo && ./${archivo%.*}" ;;
     js) imagen="node:alpine" cmd="node" ;;
     rb) imagen="ruby:alpine" cmd="ruby" ;;
     *)
