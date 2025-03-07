@@ -55,7 +55,7 @@
 
 
 
-## 📌 **Integrantes del grupo**
+## 🧙 **Integrantes del grupo**
 
 - [Camilo Andres Del Toro Trillos](https://github.com/CaDelTo)
 - [Anghely Andrea Ramos Estevez](https://github.com/Angeramos)
