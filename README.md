@@ -35,7 +35,7 @@
     ├── README.md           # Documentación del proyecto
     └── samples/            # Carpeta con ejemplos de código
    ```
-## 🧪 **Ejemplos de uso y casos de prueba**
+## 🧪 **Ejemplos de uso**
 ### **Ejemplo 1: Ejecutar un archivo de Python**
    ```bash
    bash script.sh
