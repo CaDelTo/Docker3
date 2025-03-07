@@ -29,7 +29,7 @@ extension="${archivo##*.}"
 # Detectar el lenguaje y configurar el contenedor
 case "$extension" in
     py) imagen="python:alpine" cmd="python" ;;
-    java) imagen="openjdk:alpine" cmd="javac $archivo && java -cp . ${archivo%/*}.${archivo##*/}" ;;
+    java) imagen="openjdk:alpine" class_name=$(basename "$archivo" .java) dir_name=$(dirname "$archivo") cmd="javac $archivo && java -cp $dir_name $class_name";;
     cpp|cc) imagen="gcc" cmd="g++ -o ${archivo%.*} $archivo && ./${archivo%.*}" ;;
     js) imagen="node:alpine" cmd="node" ;;
     rb) imagen="ruby:alpine" cmd="ruby" ;;
