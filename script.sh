@@ -3,15 +3,6 @@
 # Definir las imagenes
 imagenes=("python:alpine" "openjdk:alpine" "gcc" "node:alpine" "ruby:alpine")
 
-echo "Verificando e instalando imágenes de Docker..."
-
-# Verificar e instalar imagenes si no existen
-for imagen in "${imagenes[@]}"; do
-    if [[ -z $(docker images -q $imagen 2>/dev/null) ]]; then
-        docker pull $imagen
-    fi
-done
-
 read -p "Ingrese la ruta o nombre del archivo: " archivo
 
 # Verificar si el archivo existe
