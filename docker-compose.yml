@@ -1,22 +1,16 @@
-version: '3.8'
 
 services:
   python:
     image: python:alpine
-    command: tail -f /dev/null
 
   java:
     image: openjdk:alpine
-    command: tail -f /dev/null
 
   gcc:
     image: gcc
-    command: tail -f /dev/null
 
   node:
     image: node:alpine
-    command: tail -f /dev/null
 
   ruby:
     image: ruby:alpine
-    command: tail -f /dev/null
