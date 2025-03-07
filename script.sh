@@ -1,17 +1,14 @@
 #!/bin/bash
 
-# Definir las imágenes necesarias
+# Definir las imagenes
 imagenes=("python:alpine" "openjdk:alpine" "gcc" "node:alpine" "ruby:alpine")
 
 echo "Verificando e instalando imágenes de Docker..."
 
-# Verificar e instalar imágenes si no existen
+# Verificar e instalar imagenes si no existen
 for imagen in "${imagenes[@]}"; do
     if [[ -z $(docker images -q $imagen 2>/dev/null) ]]; then
-        echo "Descargando imagen: $imagen"
         docker pull $imagen
-    else
-        echo "Imagen $imagen ya está disponible."
     fi
 done
 
@@ -26,7 +23,7 @@ fi
 # Obtener la extensión del archivo
 extension="${archivo##*.}"
 
-# Detectar el lenguaje y configurar el contenedor
+# Detectar el lenguaje y seleccionar la imagen
 case "$extension" in
     py) imagen="python:alpine" cmd="python" ;;
     java) imagen="openjdk:alpine" class_name=$(basename "$archivo" .java) dir_name=$(dirname "$archivo") cmd="javac $archivo && java -cp $dir_name $class_name";;
@@ -39,16 +36,4 @@ case "$extension" in
         ;;
 esac
 
-# Imprimir el comando para depuración
-echo "Ejecutando: docker run --rm -v $(pwd):/app -w /app $imagen sh -c '$cmd $archivo'"
-
-# Empieza a contar el tiempo de ejecución
-start_time=$(date +%s%N)
-
 docker run --rm -v "$(pwd):/app" -w /app "$imagen" sh -c "$cmd $archivo || exit 1"
-
-end_time=$(date +%s%N)
-elapsed_time=$(( (end_time - start_time) / 1000000 ))
-
-# Muestra el tiempo de ejecución
-echo "Tiempo de ejecución: $elapsed_time ms"
